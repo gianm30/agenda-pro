@@ -1,0 +1,71 @@
+name: CI/CD Pipeline
+
+on:
+    push:
+        branches:
+        - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: agenda-pro-secrets
+
+    steps:
+    - name: Revisión de código
+      uses: actions/checkout@v3
+
+    - name: Configuración de JDK 21
+      uses: actions/setup-java@v3
+      with:
+        distribution: temurin
+        java-version: 21
+
+    - name: Construir proyecto con maven
+      run: mvn clean package
+
+    - name: Autenticación con Docker Hub
+      run: echo ${{ secrets.DOCKER_PASSWORD }}| docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+    - name: Construir y publicar imagen Docker
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: gianm30/agenda-pro:latest
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: agenda-pro-secrets
+
+    steps:
+    - name: Revisión de código
+      uses: actions/checkout@v3
+
+    - name: Instalar Heroku CLI
+      run: |
+          curl https://cli-assets.heroku.com/install.sh | sh
+          
+    - name: Construir Imagen Docker para Heroku
+      run: |
+          docker build -t registry.heroku.com/agenda-pro/web .
+
+    - name: Validar directorios
+      run: |
+          pwd
+          echo "----------------"
+          ls
+
+    - name: Autenticación con Heroku
+      env: 
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:login 
+
+    - name: Construir y Desplegar en Heroku
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:push -a agenda-pro web 
+
+    - name: Liberar Heroku
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:release -a agenda-pro web 

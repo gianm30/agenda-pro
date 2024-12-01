@@ -13,21 +13,26 @@ import com.gian.carrasco.agenda.pro.api.rest.dominio.puerto.salida.MarcaReposito
 import com.gian.carrasco.agenda.pro.api.rest.dominio.puerto.salida.ProductoRepositorio;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import java.util.Optional;
 
 import static com.gian.carrasco.agenda.pro.api.rest.aplicacion.servicios.TestUtil.POSICION_INICIAL;
 import static com.gian.carrasco.agenda.pro.api.rest.aplicacion.servicios.TestUtil.generar;
-import static java.util.Optional.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class ProductoServicioTest {
     @InjectMocks
     private ProductoServicio servicio;
@@ -40,8 +45,8 @@ class ProductoServicioTest {
 
     @Mock
     private MarcaRepositorio marcaRepositorio;
-    @Mock
 
+    @Mock
     private ProductoProductor productor;
 
     @Nested

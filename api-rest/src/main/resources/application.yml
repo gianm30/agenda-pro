@@ -1,14 +1,14 @@
 server:
-  port: ${APP-PORT:8080}
+  port: ${PORT:9999}
 
 spring:
   application:
     name: agenda-pro-api-rest
   datasource:
-    url: jdbc:mysql://${BD-HOST:localhost}:${BD-PORT:3306}/agenda_pro?createDatabaseIfNotExist=true&useSSL=false
+    url: jdbc:mysql://${BD_HOST:localhost}:${BD_PORT:3306}/${BD_NAME:agenda_pro}?createDatabaseIfNotExist=true&useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${BD-USR:root}
-    password: ${BD-PWD:root}
+    username: ${BD_USR:root}
+    password: ${BD_PWD:root}
   jpa:
     open-in-view: false
     show-sql: false
