@@ -1,0 +1,309 @@
+{
+	"info": {
+		"_postman_id": "a0d6b3f6-d684-4aa7-bccf-620c93e789b5",
+		"name": "Agenda-pro",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5948185"
+	},
+	"item": [
+		{
+			"name": "producto",
+			"item": [
+				{
+					"name": "buscarTodos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST}}/api/producto?posicionInicial=0&filas=10",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"producto"
+							],
+							"query": [
+								{
+									"key": "posicionInicial",
+									"value": "0"
+								},
+								{
+									"key": "filas",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscarPorId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST}}/api/producto/{{ID_PRODUCTO}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"producto",
+								"{{ID_PRODUCTO}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscarCoincidenciasPorNombre",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST}}/api/producto/coincidencias?nombre=Dell",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"producto",
+								"coincidencias"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "Dell"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.code == 201) {\r",
+									"    var json = pm.response.json();\r",
+									"    console.log(json);\r",
+									"    pm.globals.set(\"ID_PRODUCTO\", json.id)\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Laptop Toshiba\",\r\n    \"precio\": \"500.50\",\r\n    \"cantidad\": 50,\r\n    \"idMarca\": 1,\r\n    \"idCategoria\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/producto",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"producto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editar",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Dell - PC\",\r\n    \"precio\": \"1500.99\",\r\n    \"cantidad\": 5,\r\n    \"idMarca\": 2,\r\n    \"idCategoria\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/api/producto/{{ID_PRODUCTO}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"producto",
+								"{{ID_PRODUCTO}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "eliminarPorId",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST}}/api/producto/{{ID_PRODUCTO}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"producto",
+								"{{ID_PRODUCTO}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "estadistica",
+			"item": [
+				{
+					"name": "buscarPorId",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST}}/api/estadistica/{{ID_PRODUCTO}}",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"estadistica",
+								"{{ID_PRODUCTO}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.code == 200) {\r",
+							"    var json = pm.response.json();\r",
+							"    pm.globals.set(\"TOKEN\", \"Bearer \" + json.token)\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 1",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{HOST}}/api/auth/login?usuario=admin&clave=admin",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					],
+					"query": [
+						{
+							"key": "usuario",
+							"value": "admin"
+						},
+						{
+							"key": "clave",
+							"value": "admin"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
